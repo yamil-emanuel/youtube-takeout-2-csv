@@ -6,12 +6,7 @@ import pandas as pd
 import isodate
 
 """
-DISCLAIMER: THIS SCRIPT WAS MADE FOR PERSONAL USE. IT'S OPTIMIZED FOR SPANISH'S TAKEOUT EXPORTS. 
-
-INSTRUCTIONS:
-
-BEFORE RUNNING THE SCRIPT:!
-OPEN THE YOUTUBE'S HISTORY WITH THE NOTEPAD AND SAVE IT AS A .TXT FILE.
+INSTRUCTIONS
 
 1) COMPLETE THE NECESSARY DATA ABOVE IN THE CODE
 2) RUN CreateFile() and Scrapper(TAKEOUT_DATA)
@@ -23,18 +18,20 @@ OPEN THE YOUTUBE'S HISTORY WITH THE NOTEPAD AND SAVE IT AS A .TXT FILE.
 """
 
 #TAKEOUT DATA (MUST INCLUDE PATH)
-TAKEOUT_DATA=" PATH+FILE_NAME OF THE .TXT FILE GENERATED BEFORE"
-API_KEY="INSERT API KEY HERE" 
-
+TAKEOUT_DATA=r"C:\Users\yamil\Desktop\historial2.txt"
+API_KEY="AIzaSyBWca57emP108YAbUkUcqPCOfTHktKSEAw" # MIA!
+#AIzaSyBWca57emP108YAbUkUcqPCOfTHktKSEAw yamikdabouk
+#AIzaSyCJFMa23OYX3GX_TyOyNYogNxfx_7uwff0 yamilemanuel
+API_NO_MIA="AIzaSyBmQcXmAHD2h5ZurlNKHvHRwMVHbBQqbvc"
 
 #SCRAPPED DATA FROM TAKEOUT WILL BE STORED IN THIS FIRST FILE
 PRIMARY_CSV_NAME="youtube_history.csv" 
-#PRIMARY DATA + METADATA GATHERED USING YOUTUBE'S API WILL BE STORED IN THIS FILE
-TOTAL_DATA="final_data.csv"
+#PRAMARY DATA + METADATA GATHERED USING YOUTUBE'S API WILL BE STORED IN THIS FILE
+TOTAL_DATA="final_youtube_history_data.csv"
 
 #WHERE IN THE PRIMARY CSV FILE THE SCRIPT WILL START REQUESTING TO THE API (DAILY LIMIT 10.000)
 START=0
-END=1
+END=9950
 
 month_dict={'ene':'01','feb':'02', 'mar':'03', 'abr':'04','may':'05','jun':'06','jul':'07','ago':'08','sept':'09','sep':'09','oct':'10', 'nov':'11', 'dic':'12'}
 
@@ -53,17 +50,17 @@ def InsertNewVideo(data):
         temp_date=data[4].split(" ")
         
         try:
-            month=month_dict[str(temp_date[1].replace(".",""))]
+            month=month_dict[str(temp_date[-4].replace(".",""))]
         except KeyError:
             pass
 
         
-        year=temp_date[2]
+        year=temp_date[-3]
         
         
         t_day=[]
         #THE DAY'S VALUE COULD CONTAIN EXTRA CHARACTERS (LAST CHANNEL'S CHARACTER). THE FOLLOWING LOOP CLEANS IT.
-        for c in temp_date[0]:
+        for c in temp_date[-5]:
             if c.isnumeric()==True:
                 #EVERY NUMERIC CHARACTER IS STORED IN TEMPORAL_DAY
                 t_day.append(c)
@@ -108,10 +105,12 @@ def Scrapper(TAKEOUT_DATA):
                 #RAW DATE DATA
                 text_chunk=element.find_all('div')
                 #LAST 24 CHARACTERS FORM THE STR 
-                date=((text_chunk[1].get_text())[-24:])
+                date=((text_chunk[1].get_text())[-25:])
+
                 if len(date)>20 and date !="":
                     data=(title,link,channel_name,channel_url,date)
                     InsertNewVideo(data)
+
             except AttributeError:
                 pass
             except IndexError:
@@ -210,12 +209,12 @@ def WriteMetadata():
             
             writer.writerow([title, video_url,channel_name, channel_url, year, month, day, time, category_id, video_tags, default_lang, default_audio_lang, video_published_date,video_published_time, description, video_duration, video_definition, contentRating])
         
-        print(title + "DONE")
+        print(title + "             DONE")
         
 
 #CreateFile()
 #Scrapper(TAKEOUT_DATA)        
 
 
-CreateMetadataCSVFile()
-WriteMetadata()
+#CreateMetadataCSVFile()
+#WriteMetadata()
