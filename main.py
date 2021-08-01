@@ -6,6 +6,12 @@ import pandas as pd
 import isodate
 
 """
+DISCLAIMER!
+This script is created for personal use and it's optimized for spanish exports only!
+
+BEFORE RUNNING. 
+1) Open the played videos html file with the notepad and save it as a .txt file.
+
 INSTRUCTIONS
 
 1) COMPLETE THE NECESSARY DATA ABOVE IN THE CODE
@@ -18,11 +24,9 @@ INSTRUCTIONS
 """
 
 #TAKEOUT DATA (MUST INCLUDE PATH)
-TAKEOUT_DATA=r"C:\Users\yamil\Desktop\historial2.txt"
-API_KEY="AIzaSyBWca57emP108YAbUkUcqPCOfTHktKSEAw" # MIA!
-#AIzaSyBWca57emP108YAbUkUcqPCOfTHktKSEAw yamikdabouk
-#AIzaSyCJFMa23OYX3GX_TyOyNYogNxfx_7uwff0 yamilemanuel
-API_NO_MIA="AIzaSyBmQcXmAHD2h5ZurlNKHvHRwMVHbBQqbvc"
+TAKEOUT_DATA="PATH+TAKEOUT.txt"
+API_KEY="API KEY HERE" 
+
 
 #SCRAPPED DATA FROM TAKEOUT WILL BE STORED IN THIS FIRST FILE
 PRIMARY_CSV_NAME="youtube_history.csv" 
